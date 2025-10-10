@@ -787,7 +787,7 @@ const participants = [
       "no": "113",
       "nama": "VICENT YOSAFAT JOSES TAMPOMURI",
       "nim": "D10122745",
-      "programStudi": "S1 - Ilmu Komunikasi",
+      "programStudi": "S1 - Ilmu Hukum",
       "fakultas": "FAKUM"
     },
     {
