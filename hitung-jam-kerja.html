@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="id">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator Jam Kerja</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    * {
+      box-sizing: border-box;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="min-h-full p-0 m-0">
+  <div id="app" class="min-h-full flex items-center justify-center p-8">
+   <div class="w-full max-w-4xl bg-white rounded-2xl shadow-2xl p-8">
+    <div class="text-center mb-8">
+     <h1 id="pageTitle" class="text-4xl font-bold mb-3">Sistem Perhitungan Jam Kerja</h1>
+     <p id="subtitle" class="text-lg">Hitung jam logbook berdasarkan SKS dan hari kerja</p>
+    </div>
+    <form id="calculatorForm" class="space-y-6 mb-8">
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div><label for="startDate" class="block text-sm font-semibold mb-2">Tanggal Awal Penugasan</label> <input type="date" id="startDate" required class="w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 transition-all">
+      </div>
+      <div><label for="endDate" class="block text-sm font-semibold mb-2">Tanggal Akhir Penugasan</label> <input type="date" id="endDate" required class="w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 transition-all">
+      </div>
+     </div>
+     <div><label for="sks" class="block text-sm font-semibold mb-2">Jumlah SKS (1-24)</label> <input type="number" id="sks" min="1" max="24" required placeholder="Masukkan jumlah SKS" class="w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 transition-all">
+     </div><button type="submit" id="calculateBtn" class="w-full py-4 rounded-lg font-bold text-lg text-white transition-all transform hover:scale-105 active:scale-95 shadow-lg"> Hitung Jam Kerja </button>
+    </form>
+    <div id="results" class="hidden space-y-6">
+     <div class="p-6 rounded-xl border-2 shadow-md">
+      <h3 class="text-xl font-bold mb-4">Hasil Perhitungan</h3>
+      <div class="space-y-3">
+       <div class="flex justify-between items-center p-3 rounded-lg"><span class="font-semibold">Jam Logbook Seharusnya:</span> <span id="totalHours" class="text-2xl font-bold"></span>
+       </div>
+      </div>
+     </div>
+     <div class="p-6 rounded-xl border-2 shadow-md">
+      <h3 class="text-xl font-bold mb-4 text-center">📅 Jam Kumulatif Sampai Hari Ini</h3>
+      <p id="todayDate" class="text-center text-sm mb-4"></p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+       <div class="text-center p-4 rounded-lg border-2">
+        <div class="text-sm mb-2">
+         Opsi 1 (Tanpa Sabtu-Minggu)
+        </div>
+        <div id="cumulativeHours1" class="text-2xl font-bold"></div>
+       </div>
+       <div class="text-center p-4 rounded-lg border-2">
+        <div class="text-sm mb-2">
+         Opsi 2 (Tanpa Minggu)
+        </div>
+        <div id="cumulativeHours2" class="text-2xl font-bold"></div>
+       </div>
+       <div class="text-center p-4 rounded-lg border-2">
+        <div class="text-sm mb-2">
+         Opsi 3 (Semua Hari)
+        </div>
+        <div id="cumulativeHours3" class="text-2xl font-bold"></div>
+       </div>
+      </div>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div id="optionCard1" class="p-6 rounded-xl border-2 shadow-md bg-blue-50">
+       <h4 class="font-bold text-lg mb-4 text-center">Opsi 1</h4>
+       <p class="text-sm mb-4 text-center">Tidak Menghitung Sabtu &amp; Minggu</p>
+       <div class="space-y-3">
+        <div class="text-center p-3 rounded-lg bg-white">
+         <div class="text-sm mb-1">
+          Hari Kerja
+         </div>
+         <div id="workDays1" class="text-xl font-bold"></div>
+        </div>
+        <div class="text-center p-3 rounded-lg bg-white">
+         <div class="text-sm mb-1">
+          Jam per Hari
+         </div>
+         <div id="hoursPerDay1" class="text-2xl font-bold"></div>
+        </div>
+       </div>
+      </div>
+      <div id="optionCard2" class="p-6 rounded-xl border-2 shadow-md bg-green-50">
+       <h4 class="font-bold text-lg mb-4 text-center">Opsi 2</h4>
+       <p class="text-sm mb-4 text-center">Tidak Menghitung Minggu</p>
+       <div class="space-y-3">
+        <div class="text-center p-3 rounded-lg bg-white">
+         <div class="text-sm mb-1">
+          Hari Kerja
+         </div>
+         <div id="workDays2" class="text-xl font-bold"></div>
+        </div>
+        <div class="text-center p-3 rounded-lg bg-white">
+         <div class="text-sm mb-1">
+          Jam per Hari
+         </div>
+         <div id="hoursPerDay2" class="text-2xl font-bold"></div>
+        </div>
+       </div>
+      </div>
+      <div id="optionCard3" class="p-6 rounded-xl border-2 shadow-md bg-purple-50">
+       <h4 class="font-bold text-lg mb-4 text-center">Opsi 3</h4>
+       <p class="text-sm mb-4 text-center">Menghitung Semua Hari</p>
+       <div class="space-y-3">
+        <div class="text-center p-3 rounded-lg bg-white">
+         <div class="text-sm mb-1">
+          Hari Kerja
+         </div>
+         <div id="workDays3" class="text-xl font-bold"></div>
+        </div>
+        <div class="text-center p-3 rounded-lg bg-white">
+         <div class="text-sm mb-1">
+          Jam per Hari
+         </div>
+         <div id="hoursPerDay3" class="text-2xl font-bold"></div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      background_color: "#f0f4f8",
+      surface_color: "#ffffff",
+      text_color: "#1e293b",
+      primary_action_color: "#3b82f6",
+      secondary_action_color: "#64748b",
+      font_family: "Inter",
+      font_size: 16,
+      page_title: "Sistem Perhitungan Jam Kerja",
+      subtitle: "Hitung jam logbook berdasarkan SKS dan hari kerja",
+      calculate_button: "Hitung Jam Kerja"
+    };
+
+    async function onConfigChange(config) {
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+      const baseSize = config.font_size || defaultConfig.font_size;
+      
+      const backgroundColor = config.background_color || defaultConfig.background_color;
+      const surfaceColor = config.surface_color || defaultConfig.surface_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const primaryColor = config.primary_action_color || defaultConfig.primary_action_color;
+      const secondaryColor = config.secondary_action_color || defaultConfig.secondary_action_color;
+
+      document.body.style.background = backgroundColor;
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      document.body.style.fontSize = `${baseSize}px`;
+      document.body.style.color = textColor;
+
+      const surfaces = document.querySelectorAll('.bg-white, [class*="border"]');
+      surfaces.forEach(el => {
+        el.style.backgroundColor = surfaceColor;
+        el.style.borderColor = secondaryColor;
+        el.style.color = textColor;
+      });
+
+      const inputs = document.querySelectorAll('input');
+      inputs.forEach(input => {
+        input.style.borderColor = secondaryColor;
+        input.style.color = textColor;
+        input.style.fontFamily = `${customFont}, ${baseFontStack}`;
+        input.style.fontSize = `${baseSize * 0.9}px`;
+      });
+
+      const labels = document.querySelectorAll('label');
+      labels.forEach(label => {
+        label.style.color = textColor;
+        label.style.fontFamily = `${customFont}, ${baseFontStack}`;
+        label.style.fontSize = `${baseSize * 0.85}px`;
+      });
+
+      document.getElementById('pageTitle').textContent = config.page_title || defaultConfig.page_title;
+      document.getElementById('pageTitle').style.fontFamily = `${customFont}, ${baseFontStack}`;
+      document.getElementById('pageTitle').style.fontSize = `${baseSize * 2}px`;
+      document.getElementById('pageTitle').style.color = textColor;
+
+      document.getElementById('subtitle').textContent = config.subtitle || defaultConfig.subtitle;
+      document.getElementById('subtitle').style.fontFamily = `${customFont}, ${baseFontStack}`;
+      document.getElementById('subtitle').style.fontSize = `${baseSize * 1.1}px`;
+      document.getElementById('subtitle').style.color = textColor;
+
+      const calculateBtn = document.getElementById('calculateBtn');
+      calculateBtn.textContent = config.calculate_button || defaultConfig.calculate_button;
+      calculateBtn.style.backgroundColor = primaryColor;
+      calculateBtn.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      calculateBtn.style.fontSize = `${baseSize * 1.1}px`;
+
+      const headings = document.querySelectorAll('h3, h4');
+      headings.forEach(heading => {
+        heading.style.color = textColor;
+        heading.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      });
+
+      const resultTexts = document.querySelectorAll('#results span, #results div');
+      resultTexts.forEach(text => {
+        text.style.color = textColor;
+        text.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      });
+    }
+
+    function countWorkDays(startDate, endDate, excludeSaturday, excludeSunday) {
+      let count = 0;
+      const current = new Date(startDate);
+      const end = new Date(endDate);
+
+      while (current <= end) {
+        const dayOfWeek = current.getDay();
+        const isSaturday = dayOfWeek === 6;
+        const isSunday = dayOfWeek === 0;
+
+        if (!(excludeSaturday && isSaturday) && !(excludeSunday && isSunday)) {
+          count++;
+        }
+
+        current.setDate(current.getDate() + 1);
+      }
+
+      return count;
+    }
+
+    document.getElementById('calculatorForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const startDate = new Date(document.getElementById('startDate').value);
+      const endDate = new Date(document.getElementById('endDate').value);
+      const sks = parseInt(document.getElementById('sks').value);
+
+      if (endDate < startDate) {
+        alert('Tanggal akhir harus setelah tanggal awal');
+        return;
+      }
+
+      if (sks < 1 || sks > 24) {
+        alert('Jumlah SKS harus antara 1 dan 24');
+        return;
+      }
+
+      const totalHours = sks * 45;
+
+      const workDays1 = countWorkDays(startDate, endDate, true, true);
+      const workDays2 = countWorkDays(startDate, endDate, false, true);
+      const workDays3 = countWorkDays(startDate, endDate, false, false);
+
+      const hoursPerDay1 = workDays1 > 0 ? (totalHours / workDays1).toFixed(2) : 0;
+      const hoursPerDay2 = workDays2 > 0 ? (totalHours / workDays2).toFixed(2) : 0;
+      const hoursPerDay3 = workDays3 > 0 ? (totalHours / workDays3).toFixed(2) : 0;
+
+      document.getElementById('totalHours').textContent = `${totalHours} Jam`;
+      
+      document.getElementById('workDays1').textContent = `${workDays1} Hari`;
+      document.getElementById('hoursPerDay1').textContent = `${hoursPerDay1} Jam`;
+      
+      document.getElementById('workDays2').textContent = `${workDays2} Hari`;
+      document.getElementById('hoursPerDay2').textContent = `${hoursPerDay2} Jam`;
+      
+      document.getElementById('workDays3').textContent = `${workDays3} Hari`;
+      document.getElementById('hoursPerDay3').textContent = `${hoursPerDay3} Jam`;
+
+      // Calculate cumulative hours up to today
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('todayDate').textContent = `Per ${today.toLocaleDateString('id-ID', options)}`;
+
+      let cumulativeHours1 = 0;
+      let cumulativeHours2 = 0;
+      let cumulativeHours3 = 0;
+
+      if (today >= startDate) {
+        const effectiveEndDate = today <= endDate ? today : endDate;
+        
+        const daysPassed1 = countWorkDays(startDate, effectiveEndDate, true, true);
+        const daysPassed2 = countWorkDays(startDate, effectiveEndDate, false, true);
+        const daysPassed3 = countWorkDays(startDate, effectiveEndDate, false, false);
+
+        cumulativeHours1 = (parseFloat(hoursPerDay1) * daysPassed1).toFixed(2);
+        cumulativeHours2 = (parseFloat(hoursPerDay2) * daysPassed2).toFixed(2);
+        cumulativeHours3 = (parseFloat(hoursPerDay3) * daysPassed3).toFixed(2);
+      }
+
+      document.getElementById('cumulativeHours1').textContent = `${cumulativeHours1} Jam`;
+      document.getElementById('cumulativeHours2').textContent = `${cumulativeHours2} Jam`;
+      document.getElementById('cumulativeHours3').textContent = `${cumulativeHours3} Jam`;
+
+      document.getElementById('results').classList.remove('hidden');
+      document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => {
+                config.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.primary_action_color || defaultConfig.primary_action_color,
+              set: (value) => {
+                config.primary_action_color = value;
+                window.elementSdk.setConfig({ primary_action_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+              set: (value) => {
+                config.secondary_action_color = value;
+                window.elementSdk.setConfig({ secondary_action_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => {
+              config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["page_title", config.page_title || defaultConfig.page_title],
+          ["subtitle", config.subtitle || defaultConfig.subtitle],
+          ["calculate_button", config.calculate_button || defaultConfig.calculate_button]
+        ])
+      });
+
+      onConfigChange(window.elementSdk.config);
+    } else {
+      onConfigChange(defaultConfig);
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a0c4b3e96875fb6',t:'MTc2MzUxOTUxMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
