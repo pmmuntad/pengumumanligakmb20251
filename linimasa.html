@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Timeline Pencairan Insentif LKMB 2025</title>
-    <!-- Perbaikan: hapus spasi ekstra di URL -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -44,7 +43,7 @@
 
         @keyframes progress-fill {
             from { width: 0%; }
-            to { width: 87.5%; } /* 7 dari 8 tahapan = 87.5% */
+            to { width: 87.5%; } /* Misalnya 7 dari 8 tahapan */
         }
 
         .hover-lift {
@@ -54,6 +53,11 @@
         .hover-lift:hover {
             transform: translateY(-2px);
         }
+
+        /* Pastikan kontainer link tidak terlalu padat */
+        .links-container {
+            margin-bottom: 2rem;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-green-50 min-h-full font-sans">
@@ -62,13 +66,28 @@
         <div class="text-center mb-12">
             <h1 class="text-4xl font-bold text-gray-800 mb-4">Timeline Pencairan Insentif</h1>
             <h2 class="text-2xl text-blue-600 mb-2">Liga Kampus Mandiri Berdampak 2025</h2>
-            <p class="text-gray-600 text-lg">Termin 1 (Periode September - Oktober 2025)</p>
+            <p class="text-gray-600 text-lg">Termin 2 (Periode November - Desember 2025)</p>
 
             <!-- Progress Bar -->
             <div class="mt-6 bg-gray-200 rounded-full h-3 max-w-md mx-auto">
                 <div class="progress-indicator bg-gradient-to-r from-blue-500 to-green-500 h-3 rounded-full"></div>
             </div>
             <p class="text-sm text-gray-500 mt-2">Progress: 7 dari 8 tahapan</p>
+        </div>
+
+        <!-- Links Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8 links-container">
+            <div class="space-y-4">
+                <a href="https://s.id/MONEVKMBMANDIRI20251" target="_blank" rel="noopener noreferrer" class="block bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-4 rounded-lg font-semibold text-center transition-all duration-300 hover:from-blue-600 hover:to-blue-700 hover:shadow-xl hover:scale-[1.02] transform">
+                    📋 Link Form Monev Download Sertifikat
+                </a>
+                <a href="https://s.id/CERITABAIK" target="_blank" rel="noopener noreferrer" class="block bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-4 rounded-lg font-semibold text-center transition-all duration-300 hover:from-green-600 hover:to-green-700 hover:shadow-xl hover:scale-[1.02] transform">
+                    ✨ Link Upload Cerita Baik
+                </a>
+                <a href="https://s.id/ADUANKETERLIBATAN" target="_blank" rel="noopener noreferrer" class="block bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-4 rounded-lg font-semibold text-center transition-all duration-300 hover:from-red-600 hover:to-red-700 hover:shadow-xl hover:scale-[1.02] transform">
+                    📢 Link Pengaduan
+                </a>
+            </div>
         </div>
 
         <!-- Timeline Container -->
@@ -84,7 +103,7 @@
 
         <!-- Legend -->
         <div class="mt-12 bg-white rounded-lg shadow-md p-6">
-            <h3 class="text-lg font-semibold text-gray-800 ">Catatan:</h3>
+            <h3 class="text-lg font-semibold text-gray-800">Catatan:</h3>
             <span class="text-gray-700">Jadwal pada timeline bersifat tentatif dan dapat disesuaikan berdasarkan kondisi nyata di lapangan.</span>
             <h3 class="text-lg font-semibold text-gray-800 mt-2">Keterangan Status:</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -101,62 +120,38 @@
                     <span class="text-gray-700">Pencairan selesai</span>
                 </div>
             </div>
-            
         </div>
-        
     </div>
 
     <script>
         const timelineData = [
             {
                 id: 1,
-                title: "Registrasi Ulang Penerima",
-                date: "9-19 Oktober 2025",
-                description: "Peserta melengkapi Data Rekening BSI atas nama pribadi melalui link yang disediakan di WhatsApp Grup. Bagi yang berada di Luar Kota juga melakukan penandatangan online.",
-                penanggungJawab: "Admin PMM UNTAD",
-                status: "Proses administrasi awal",
+                title: "Kegiatan Refleksi, Pengumpulan Cerita Baik & Pengisian Form Monev",
+                date: "18 - 25 November 2025",
+                description: "Penerima Insentif wajib mengikuti kegiatan refleksi, mengumpulkan cerita baik (perwakilan mitra), dan mengisi form monitoring & evaluasi.",
+                penanggungJawab: "PMM & DKB UNTAD",
+                status: "Proses administrasi",
                 kategori: "administrasi",
                 icon: "🔵",
-                preview: "Peserta melakukan konfirmasi ulang data dan keikutsertaan program..."
+                preview: "Penerima Insentif Wajib mengikuti kegiatan Refleksi..."
             },
             {
                 id: 2,
-                title: "Penandatanganan & Pengumpulan Buku Rekening",
-                date: "19-21 Oktober 2025, pukul 13.00-17.00 WITA",
-                description: "Peserta bertanda tangan pada dokumen pencairan dan menyerahkan buku rekening atau screenshot aplikasi Byond/BSI yang memuat nama dan nomor rekening pribadi. Bagi yang berada di Luar Kota diambil data rekening dan TTD online dari Link yang sudah diedarkan.",
+                title: "Rekap Data Kehadiran Refleksi, Pengumpulan Cerita Baik & Pengisian Form Monev",
+                date: "26 November 2025",
+                description: "Panitia melakukan rekapitulasi data kehadiran peserta, kelengkapan cerita baik, dan hasil pengisian form monev sebagai syarat pencairan.",
                 penanggungJawab: "Admin PMM UNTAD",
-                status: "Validasi dokumen penerima",
-                kategori: "verifikasi",
-                icon: "🟧",
-                preview: "Peserta menyerahkan buku rekening atau screenshot aplikasi Byond/BSI..."
+                status: "Proses administrasi",
+                kategori: "administrasi",
+                icon: "🔵",
+                preview: "Panitia melakukan rekap data kehadiran dan kelengkapan dokumen..."
             },
             {
                 id: 3,
-                title: "Melengkapi Bukti Dukung Pencairan",
-                date: "22–25 Oktober 2025",
-                description: "Panitia melengkapi dokumen pendukung seperti berita acara, SK Penerima, Daftar nomor rekening, Lampiran Rekening, rekap jumlah jam Logbook, dan dokumen pendukung lainnya.",
-                penanggungJawab: "Admin PMM UNTAD",
-                status: "Lengkapi dokumen pendukung",
-                kategori: "verifikasi",
-                icon: "🟧",
-                preview: "Panitia melengkapi dokumen pendukung seperti berita acara..."
-            },
-            {
-                id:4,
-                title: "Penarikan Data Logbook dari SITAMPAN",
-                date: "23 Oktober 2025, pukul 23.59 WITA",
-                description: "Admin PMM UNTAD menarik data aktivitas mahasiswa dari SITAMPAN sebagai dasar kelayakan pencairan termin 1.",
-                penanggungJawab: "Admin PMM UNTAD",
-                status: "Pengumpulan data",
-                kategori: "administrasi",
-                icon: "🔵",
-                preview: "Admin PMM UNTAD menarik data aktivitas mahasiswa dari sistem SITAMPAN..."
-            },
-            {
-                id: 5,
                 title: "Pengajuan Dokumen ke Keuangan",
-                date: "24 Oktober 2025",
-                description: "Panitia mengajukan berkas pencairan lengkap ke bagian keuangan LPPM.",
+                date: "27 November 2025",
+                description: "Panitia mengajukan berkas pencairan lengkap ke bagian keuangan LPPM setelah seluruh persyaratan terpenuhi.",
                 penanggungJawab: "Admin PMM UNTAD",
                 status: "Pengajuan berkas ke keuangan",
                 kategori: "verifikasi",
@@ -164,10 +159,10 @@
                 preview: "Panitia mengajukan berkas pencairan lengkap ke bagian keuangan..."
             },
             {
-                id: 6,
+                id: 4,
                 title: "Verifikasi & Revisi Dokumen",
-                date: "27 Oktober 2025",
-                description: "Dokumen diverifikasi dan direvisi sesuai arahan dari bagian keuangan LPPM.",
+                date: "28 - 30 November 2025",
+                description: "Dokumen diverifikasi oleh bagian keuangan LPPM dan dilakukan revisi jika diperlukan sebelum proses pencairan.",
                 penanggungJawab: "Keuangan LPPM",
                 status: "Proses validasi akhir",
                 kategori: "verifikasi",
@@ -175,10 +170,10 @@
                 preview: "Dokumen diverifikasi dan direvisi sesuai arahan dari bagian keuangan..."
             },
             {
-                id: 7,
+                id: 5,
                 title: "Penyetoran Dana ke Bank BSI",
-                date: "28 Oktober 2025",
-                description: "Dana program disetorkan ke rekening universitas di Bank Syariah Indonesia.",
+                date: "2 Desember 2025",
+                description: "Dana program disetorkan ke rekening universitas di Bank Syariah Indonesia untuk diproses penyaluran lebih lanjut.",
                 penanggungJawab: "Bagian Keuangan LPPM",
                 status: "Penyaluran dana ke bank",
                 kategori: "pencairan",
@@ -186,10 +181,10 @@
                 preview: "Dana program disetorkan ke rekening universitas di Bank Syariah Indonesia..."
             },
             {
-                id: 8,
+                id: 6,
                 title: "Proses Penyaluran Dana ke Mahasiswa",
-                date: "28-30 Oktober 2025",
-                description: "Dana insentif ditransfer ke rekening masing-masing penerima.",
+                date: "3 Desember 2025",
+                description: "Dana insentif ditransfer langsung ke rekening masing-masing penerima mahasiswa melalui Bank BSI.",
                 penanggungJawab: "Teller Bank BSI",
                 status: "Pencairan selesai",
                 kategori: "pencairan",
